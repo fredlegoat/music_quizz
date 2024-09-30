@@ -1,0 +1,302 @@
+@import url('https://fonts.googleapis.com/css?family=Exo:400,700');
+@import url(https://fonts.googleapis.com/css?family=Bungee+Shade);
+@import url(https://fonts.googleapis.com/css?family=Press+Start+2P);
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    overflow-x: hidden;
+    font-family: 'Exo', sans-serif;
+    color: #FFFFFF;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+h1 {
+    color: #FFFFFF;
+    font-size: 6em;
+    font-family: "Bungee Shade";
+}
+
+h2 {
+    color: #FFFFFF;
+    font-size: 1.4em;
+    font-family: "Press Start 2P";
+}
+
+h3 {
+    color: #FFFFFF;
+    font-size: 1.2em;
+    font-family: "Press Start 2P";
+    margin-bottom: 40px;
+    line-height: 1.6em;
+}
+
+h4 {
+    color: #FFFFFF;
+    font-size: 1.2em;
+    font-family: "Press Start 2P";
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #FFFFFF;
+    text-align: left;
+    font-size: 1em;
+    font-family: "Press Start 2P";
+}
+
+li {
+    color: #FFFFFF;
+    font-size: 1em;
+    font-family: "Press Start 2P";
+    margin: 5px;
+}
+
+.authors {
+    background: linear-gradient(60deg, #67c9d3,#d1d5e3, #2b50d5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 50px;
+}
+
+header {
+    padding-top: 80px;
+}
+
+#game-menu {
+    margin-top: 80px;
+}
+
+#game-menu ul {
+    list-style: none;
+}
+
+.menu-button {
+    padding: 20px;
+    margin-bottom: 30px;
+    transition: all 0.4s ease;
+}
+
+.menu-button a {
+    padding: 20px;
+    color: #4e54c8;
+    font-size: 1.2em;
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.8);
+    -webkit-box-shadow: -7px 7px 4px 4px rgba(255, 255, 255, 0.2);
+    -moz-box-shadow: -7px 7px 4px 4px rgba(255, 255, 255, 0.2);
+    box-shadow: -7px 7px 4px 4px rgba(255, 255, 255, 0.2);
+}
+
+.menu-button a:hover {
+    padding: 20px;
+    color: #FFFFFF;
+    text-decoration: none;
+    background-color: rgba(78, 84, 200, 0.8);
+    -webkit-box-shadow: 0px 2px 2px 2px rgba(255, 255, 255, 0.2);
+    -moz-box-shadow: 0px 2px 2px 2px rgba(255, 255, 255, 0.2);
+    box-shadow: 0px 2px 2px 2px rgba(255, 255, 255, 0.2);
+}
+
+.menu-button a:active {
+    border-style: 4px solid;
+    border-color: linear-gradient(to right, #E040FB, #00BCD4);
+    background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+    -webkit-animation: animatedgradient 3s ease alternate infinite;
+            animation: animatedgradient 3s ease alternate infinite;
+    background-size: 300% 300%;
+}
+
+@keyframes animatedgradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#game-instructions {
+    margin-top: 80px;
+    display: none;
+}
+
+
+#game-instructions .menu-button {
+    color: #FFFFFF;
+    font-size: 1em;
+    font-family: "Press Start 2P";
+    margin-top: 40px;
+    margin-bottom: 70px;
+}
+
+.area {
+    background: #4e54c8;  
+    background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);  
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.circles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+}
+
+.circles li:nth-child(1) {
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(2) {
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circles li:nth-child(3) {
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(4) {
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.circles li:nth-child(5) {
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(6) {
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(7) {
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 7s;
+}
+
+.circles li:nth-child(8) {
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circles li:nth-child(9) {
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circles li:nth-child(10) {
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+@keyframes animate {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: -50px;
+}
+.logo img {
+    width: 250px;
+    height: auto;
+}
+
+/* Styles pour les appareils mobiles */
+@media (max-width: 768px) {
+    .logo img {
+        width: 150px; /* Taille plus grande du logo */
+        height: auto;
+        margin-top: 200px;
+    }
+
+    h2, h3 {
+        font-size: 2em; /* Taille plus grande des titres */
+        text-align: center; /* Centrage des titres */
+    }
+
+    .menu-button {
+        margin: 20px auto;
+        width: 80%; /* Rendre les boutons plus larges sur mobile */
+    }
+
+    .menu-button a {
+        font-size: 1.5em; /* Taille plus grande du texte des boutons */
+        padding: 15px; /* Plus de padding pour les boutons */
+        text-align: center; /* Centrer le texte des boutons */
+    }
+}

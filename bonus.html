@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonus</title>
+    <link rel="stylesheet" href="lobby.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    <style>
+        /* Additional styling for the bonus page */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            background: linear-gradient(to bottom, #2c3e50, #4e54c8);
+        }
+        .content {
+            display: none;
+            text-align: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+        .password-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            margin: 20px auto;
+            max-width: 500px;
+            width: 100%;
+            margin-top: 15%;
+        }
+        h2 {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        h2.quiz-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            margin-bottom: 100px;
+        }   
+        h3.section-title {
+            font-size: 1.5em;
+            margin-top: 50px;
+        }
+        input[type="password"] {
+            padding: 12px;
+            border-radius: 5px;
+            border: none;
+            font-family: 'Press Start 2P', cursive;
+            margin-bottom: 20px;
+            width: 90%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.1em;
+        }
+        button {
+            padding: 12px 20px;
+            border-radius: 5px;
+            background-color: #4e54c8;
+            border: none;
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            cursor: pointer;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.1em;
+        }
+        button:hover {
+            background-color: #3a40a0;
+        }
+        .error-message {
+            color: rgb(248, 44, 44);
+            margin-top: 15px;
+            font-size: 1em;
+            display: none;
+            text-align: center; 
+        }
+        
+        /* Updated styles for added elements */
+        .leaderboard {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .leaderboard th, .leaderboard td {
+            border: 1px solid #ffffff;
+            padding: 10px;
+            text-align: left;
+        }
+        .leaderboard th {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        .timer {
+            font-size: 0.8em;
+            margin: 20px 0;
+        }
+        .creation-steps {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .creation-steps img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .creation-steps img:hover {
+            transform: scale(1.05);
+        }
+        
+        /* New styles for section titles */
+        .section-title {
+            font-size: 1.8em;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        /* Styles for the timer animation */
+        .timer-animation {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fbdc6f;
+        }
+        
+        .next-steps {
+            background-color: rgba(243, 156, 18, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+    
+        
+        
+        /* Media Queries for responsiveness */
+        @media (max-width: 600px) {
+            h2 {
+                font-size: 1.5em;
+                margin-bottom: 20px;
+            }
+            input[type="password"],
+            button {
+                width: 100%;
+            }
+            .password-container {
+                padding: 20px;
+            }
+            .content {
+                padding: 10px;
+            }
+            .creation-steps {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                font-size: 1.5em;
+            }
+        }
+        .avatar-slider {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+        }
+        .avatar-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            margin-bottom: 5px;
+        }
+        
+        .avatar {
+            width: 80%;
+            height: 80%;
+            object-fit: cover;
+            border-radius: 20%;
+        }
+        .gif-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .gif {
+            width: 300px;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .nav-button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            position: absolute;
+            top: 40%;
+            transform: translateY(-50%);
+        }
+        .prev {
+            left: -80px;
+        }
+        .next {
+            right: -80px;
+        }
+        .avatar-slider p {
+            font-size: 1em;
+            margin-bottom: 20px; 
+            text-align: center;  
+        }
+
+        .creation-steps img {
+            cursor: zoom-in;
+            transition: transform 0.3s ease;
+        }
+        .creation-steps img:hover {
+            transform: scale(1.05);
+        }
+        .zoom-overlay {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .zoom-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.1);
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+            border-radius: 15px;
+        }
+        .zoom-overlay.active {
+            opacity: 1;
+        }
+        .zoom-overlay.active .zoom-content {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .zoom-close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .konami-window {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1001;
+            max-width: 80%;
+            text-align: center;
+        }
+        .konami-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+                /* Styles pour les flèches du code Konami */
+        .konami-arrows {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .konami-arrow {
+            font-size: 24px;
+            margin: 0 5px;
+            color: #ffffff;
+            transition: color 0.3s ease;
+}
+
+        .konami-arrow.active {
+            color: #4CAF50;
+        }
+
+    /* Rotation pour les flèches gauche et droite */
+        .konami-arrow.left {
+            transform: rotate(-90deg); /* Rotation de -90 degrés pour la gauche */
+        }
+
+        .konami-arrow.right {
+            transform: rotate(90deg); /* Rotation de 90 degrés pour la droite */
+}
+
+    </style>
+</head>
+<body>
+    <div class="area">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+
+    <!-- Password Form -->
+    <div id="password-container" class="password-container">
+        <div class="logo">
+            <a href="lobby.html">
+                <img src="img/test_logo2.png" alt="Quiz Logo">
+            </a>
+        </div>
+        <h2>Entre le mot de passe pour accéder au contenu bonus</h2>
+        <input type="password" id="password-input" placeholder="Mot de passe" onkeypress="checkEnter(event)">
+        <button onclick="checkPassword()">Valider</button>
+        <div id="error-message" class="error-message">BEEEH T'AS TROP LA RAGE 🫵😂</div>
+    </div>
+
+    <!-- Bonus Content -->
+    <div id="bonus-content" class="content">
+        <div>
+            <div class="logo">
+                <a href="lobby.html">
+                    <img src="img/test_logo2.png" alt="Quiz Logo">
+                </a>
+            </div>
+            <h2 class="quiz-title">Tu as débloqué le contenu bonus !</h2>
+            
+            <!-- Leaderboard -->
+            <h3 class="section-title">Le classement</h3>
+            <table class="leaderboard">
+                <thead>
+                    <tr>
+                        <th>Rang</th>
+                        <th>Nom</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>GOAT</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Timer -->
+            <h3 class="section-title">Le temps que ça m'a prit</h3>
+            <div class="timer">
+                Temps de création : <span id="timer" class="timer-animation">0j 00h 00min</span>
+            </div>
+
+            <!-- Creation Steps -->
+            <h3 class="section-title">Images randoms</h3>
+            <div class="creation-steps">
+                <img src="img/maquette_de_con.png" alt="Maquette" onclick="openZoom(this)">
+                <img src="img/mindmap.png" alt="mindmap" onclick="openZoom(this)">
+                <img src="img/v1_site.png" alt="v1" onclick="openZoom(this)">
+                <img src="img/music_quizz_thumb.png" alt="thumbnail" onclick="openZoom(this)">
+            </div>
+        
+            <!-- Overlay pour l'effet de zoom -->
+            <div id="zoomOverlay" class="zoom-overlay" onclick="closeZoom()">
+                <span class="zoom-close">&times;</span>
+                <img class="zoom-content" id="zoomImage" onclick="event.stopPropagation()">
+            </div>
+
+            <h3 class="section-title">Avatar</h3>
+            <div class="avatar-slider">
+                <P>Toutes les images de fin en fonction du choix de l'avatar !</p>
+                <div class="avatar-container">
+                    <button class="nav-button prev" onclick="changeAvatar(-1)">&#10094;</button>
+                    <img id="avatar" class="avatar" src="img/pfp/ayanokoji.jpg" alt="Avatar">
+                    <button class="nav-button next" onclick="changeAvatar(1)">&#10095;</button>
+                </div>
+                <div class="gif-container">
+                    <img id="gif1" class="gif" src="img/score/ayanokoji_1.gif" alt="GIF 1">
+                    <img id="gif2" class="gif" src="img/score/ayanokoji_1.gif" alt="GIF 2">
+                    <img id="gif3" class="gif" src="img/score/ayanokoji_1.gif" alt="GIF 3">
+                </div>
+            </div>
+
+            <h3 class="section-title">👀</h3>
+            <div class="next-steps">
+                <p style="text-align: center;">Une suite ?</p>
+                <br>
+                <div class="konami-arrows">
+                    <span class="konami-arrow left">&#8593;</span> <!-- Flèche gauche, rotation appliquée -->
+                    <span class="konami-arrow">&#8595;</span> <!-- Flèche bas (normal) -->
+                    <span class="konami-arrow right">&#8593;</span> <!-- Flèche droite, rotation appliquée -->
+                    <span class="konami-arrow">&#8595;</span> <!-- Flèche haut (normal) -->
+                    <span class="konami-arrow left">&#8593;</span> <!-- Flèche gauche, rotation appliquée -->
+                    <span class="konami-arrow">&#8595;</span> <!-- Flèche bas (normal) -->
+                    <span class="konami-arrow right">&#8593;</span> <!-- Flèche droite, rotation appliquée -->
+                    <span class="konami-arrow">&#8595;</span> <!-- Flèche haut (normal) -->
+                </div>
+                
+            </div>  
+            <div id="konamiWindow" class="konami-window">
+                <span class="konami-close" onclick="closeKonamiWindow()">&times;</span>
+                <h3>GG !</h3>
+                <p>On a fait la musique alors pourquoi pas les animés ?</p>
+                <img src="img/luffy_curious.png" alt="Bonus img" style="max-width: 50%; height: auto; border-radius:5%; margin-top: 20px;">
+                <p style="text-align: center; margin-top: 20px;">A suivre...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const encodedPassword = 'c2FsYnV0YW1vbA=='; // sisi y a rien à regarder ici lâche ça 
+
+        function checkPassword() {
+            const input = document.getElementById('password-input').value.trim();
+            const correctPassword = atob(encodedPassword);
+            const errorMessage = document.getElementById('error-message');
+
+            if (input === correctPassword) {
+                // Hide password form and show bonus content
+                document.getElementById('password-container').style.display = 'none';
+                document.getElementById('bonus-content').style.display = 'block';
+                errorMessage.style.display = 'none'; // Hide error message if correct
+                animateTimer();
+            } else {
+                errorMessage.style.display = 'block'; // Show error message if incorrect
+            }
+        }
+
+        function checkEnter(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        }
+
+        function animateTimer() {
+    const timer = document.getElementById('timer');
+    const targetTime = { days: 1, hours: 7, minutes: 42 };
+    let currentTime = { days: 0, hours: 0, minutes: 0 };
+
+    const interval = setInterval(() => {
+        // Incrémenter les minutes
+        if (currentTime.minutes < 59) {
+            currentTime.minutes++;
+        } 
+        // Incrémenter les heures si les minutes atteignent 60
+        else if (currentTime.hours < 23) {
+            currentTime.hours++;
+            currentTime.minutes = 0;
+        } 
+        // Incrémenter les jours si les heures atteignent 24
+        else if (currentTime.hours === 23 && currentTime.minutes === 59) {
+            currentTime.days++;
+            currentTime.hours = 0;
+            currentTime.minutes = 0;
+        } 
+        // Si la durée cible est atteinte, arrêter le compteur
+        else if (currentTime.days < targetTime.days) {
+            clearInterval(interval);
+        }
+
+        timer.textContent = `${currentTime.days}j ${String(currentTime.hours).padStart(2, '0')}h ${String(currentTime.minutes).padStart(2, '0')}min`;
+
+        // Si la durée cible est atteinte, arrêter le compteur
+        if (currentTime.days === targetTime.days && currentTime.hours === targetTime.hours && currentTime.minutes === targetTime.minutes) {
+            clearInterval(interval);
+        }
+    }, 10); // L'intervalle de mise à jour est de 1000 ms (1 seconde)
+}
+
+
+        const avatars = [
+            { pfp: 'img/pfp/nezuko.jpg', gifs: ['img/score/nezuko_1.gif', 'img/score/nezuko_2.gif', 'img/score/nezuko_3.gif'] },
+            { pfp: 'img/pfp/hinata.jpg', gifs: ['img/score/hinata_1.gif', 'img/score/hinata_2.gif', 'img/score/hinata_3.gif'] },
+            { pfp: 'img/pfp/happy.jpg', gifs: ['img/score/happy_1.gif', 'img/score/happy_2.gif', 'img/score/happy_3.gif'] },
+            { pfp: 'img/pfp/chiyuki.jpg', gifs: ['img/score/chiyuki_1.gif', 'img/score/chiyuki_2.gif', 'img/score/chiyuki_3.gif'] },
+            { pfp: 'img/pfp/ayanokoji.jpg', gifs: ['img/score/ayanokoji_1.gif', 'img/score/ayanokoji_2.gif', 'img/score/ayanokoji_3.gif'] },
+            { pfp: 'img/pfp/maomao.jpg', gifs: ['img/score/maomao_1.gif', 'img/score/maomao_2.gif', 'img/score/maomao_3.gif'] }
+        ];
+
+let currentAvatarIndex = 0;
+
+function changeAvatar(direction) {
+    currentAvatarIndex = (currentAvatarIndex + direction + avatars.length) % avatars.length;
+    updateAvatarAndGifs();
+}
+
+function updateAvatarAndGifs() {
+    const currentAvatar = avatars[currentAvatarIndex];
+    document.getElementById('avatar').src = currentAvatar.pfp;
+    document.getElementById('gif1').src = currentAvatar.gifs[0];
+    document.getElementById('gif2').src = currentAvatar.gifs[1];
+    document.getElementById('gif3').src = currentAvatar.gifs[2];
+}
+
+function initializeAvatarSlider() {
+    updateAvatarAndGifs();
+}
+
+document.addEventListener('DOMContentLoaded', initializeAvatarSlider);
+
+function openZoom(img) {
+            const overlay = document.getElementById("zoomOverlay");
+            const zoomImage = document.getElementById("zoomImage");
+            
+            zoomImage.src = img.src;
+            zoomImage.alt = img.alt;
+            
+            overlay.style.display = "block";
+            setTimeout(() => {
+                overlay.classList.add("active");
+            }, 10);
+            
+            document.body.style.overflow = "hidden"; // Empêche le défilement du body
+        }
+
+        function closeZoom() {
+            const overlay = document.getElementById("zoomOverlay");
+            overlay.classList.remove("active");
+            setTimeout(() => {
+                overlay.style.display = "none";
+            }, 300);
+            
+            document.body.style.overflow = ""; // Réactive le défilement du body
+        }
+
+        // Fermer le zoom avec la touche Echap
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") {
+                closeZoom();
+            }
+        });
+
+        /// Konami Code
+const konamiCode = ['ArrowLeft', 'ArrowDown', 'ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ArrowDown'];
+let konamiIndex = 0;
+const konamiArrows = document.querySelectorAll('.konami-arrow');
+
+document.addEventListener('keydown', (e) => {
+    const currentArrow = konamiCode[konamiIndex];
+
+    // Vérifie si la touche appuyée correspond à celle du Konami code
+    if (e.key === currentArrow) {
+        konamiArrows[konamiIndex].classList.add('active'); // Ajouter la classe active à la bonne flèche
+        konamiIndex++;
+
+        // Si tout le code est correct, montrer le message Konami
+        if (konamiIndex === konamiCode.length) {
+            setTimeout(() => {
+                showKonamiWindow();
+                resetKonamiCode(); // Réinitialise le Konami code après succès
+            }, 500);
+        }
+    } else {
+        resetKonamiCode(); // Réinitialise le code si la touche n'est pas correcte
+    }
+});
+
+function resetKonamiCode() {
+    konamiIndex = 0;
+    konamiArrows.forEach(arrow => arrow.classList.remove('active')); // Retirer la classe active des flèches
+}
+
+function showKonamiWindow() {
+    document.getElementById('konamiWindow').style.display = 'block';
+}
+
+function closeKonamiWindow() {
+    document.getElementById('konamiWindow').style.display = 'none';
+}
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Quizz</title>
+    <link rel="stylesheet" href="lobby.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    <style>
+        .quiz-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 80px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            transition: background-color 0.3s ease;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            width: 90px;
+            height: auto;
+        }
+        .quiz-title {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .avatar-selection {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .avatar-display {
+            overflow: hidden; /* Hide overflow */
+            width: 360px; /* Width to show 3 avatars (3 * 120px) */
+            height: 120px; /* Height of a single avatar */
+            position: relative; /* Positioning for absolute children */
+        }
+        .avatar-wrapper {
+            display: flex;
+            transition: transform 0.5s ease; /* Smooth transition */
+            width: calc(100px * 6 + 20px * 5); /* Width to fit all avatars + margins */
+        }
+        .avatar {
+            width: 100px; /* Square avatars */
+            height: 100px;
+            border-radius: 10%; /* Slightly rounded */
+            cursor: pointer;
+            margin: 0 10px; /* Margin between avatars */
+            transition: transform 0.3s;
+        }
+        .avatar:hover {
+            transform: scale(1.1);
+        }
+        .avatar-buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .avatar-btn {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 0 5px;
+        }
+        .avatar-btn:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .avatar-warning {
+            text-align: center;
+            font-family: 'Exo', sans-serif;
+            color: #FFFFFF;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #start-game-btn {
+            background-color: #4e54c8;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #start-game-btn:hover {
+            background-color: #3a40a0;
+        }
+        .avatar.selected-avatar {
+            border: 4px solid #4e54c8; /* Thicker border */
+            box-shadow: 0px 0px 15px 5px rgba(78, 84, 200, 0.8); /* Glowing shadow */
+            transform: scale(1.2); /* Larger scale when selected */
+            transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition for effects */
+        }
+
+        .avatar-display {
+            width: 360px; /* Largeur pour afficher 3 avatars (3 * 120px) */
+            height: 120px; /* Hauteur de l'avatar */
+            position: relative; /* Positionnement pour les enfants absolus */
+            display: flex; /* Utiliser flex pour l'alignement */
+            align-items: flex-start; /* Aligner les avatars en haut */
+            white-space: nowrap; 
+            scrollbar-width: none;
+        }
+
+        .avatar {
+            width: 100px; /* Avatars carrés */
+            height: 100px;
+            border-radius: 10%; /* Légèrement arrondi */
+            cursor: pointer;
+            margin: 0 10px; /* Marge entre les avatars */
+            transition: transform 0.3s;
+            margin-top: 10px; /* Ajouter une marge en haut */
+            }
+
+        .avatar:hover {
+            transform: scale(1.1);
+        }
+
+/* Styles pour les écrans de petite taille */
+
+@media (max-width: 600px) {
+    .quiz-container {
+        padding: 20px; /* Réduire le padding */
+    }
+
+    .logo {
+        margin-bottom: 10px; /* Réduire l'espace sous le logo */
+    }
+
+    .quiz-title {
+        font-size: 1em; /* Réduire la taille du texte du titre */
+    }
+
+    .avatar-warning {
+        font-size: 0.8em; /* Réduire la taille du texte de l'avertissement */
+    }
+
+    .avatar {
+        width: 80px; /* Réduire la taille des avatars */
+        height: 80px; /* Hauteur correspondante */
+    }
+
+    .avatar-display {
+        width: 250px; /* Ajustez la largeur pour montrer 3 avatars (3 * 80px + 20px margin) */
+        height: 250px; /* Ajustez la hauteur pour correspondre à la taille des avatars */
+    }
+
+    #start-game-btn {
+        font-size: 0.9em; /* Réduire la taille du bouton de démarrage */
+    }
+
+    .avatar-btn {
+        padding: 8px; /* Ajuster le padding des boutons */
+    }
+    .avatar-wrapper {
+        width: calc(80px * 6 + 20px * 5); /* Largeur pour accueillir tous les avatars */
+    }
+
+    .avatar {
+        width: 80px; /* Réduire la taille des avatars */
+        height: 80px; /* Hauteur correspondante */
+    }
+
+    .avatar-btn {
+        padding: 8px; /* Ajuster le padding des boutons */
+    }
+    #prev-avatar,
+    #next-avatar {
+        display: none; /* Cacher les flèches sur mobile */
+    }
+    @media (max-width: 600px) {
+    .avatar-display {
+        width: 160px; /* Ajustez la largeur pour montrer 3 avatars */
+        height: 160px; /* Ajustez la hauteur */
+        overflow-x: auto; /* Permet le défilement horizontal */
+        white-space: nowrap; /* Empêche le retour à la ligne des avatars */
+        scrollbar-width: none; /* Pour Firefox : rendre la barre de défilement plus fine */
+    }
+
+    .avatar-display::-webkit-scrollbar {
+        height: 8px; /* Hauteur de la barre de défilement pour Chrome, Safari et Edge */
+    }
+
+    .avatar-display::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.5); /* Couleur du "pouce" de la barre de défilement */
+        border-radius: 10px; /* Coins arrondis du "pouce" */
+    }
+
+    .avatar {
+        width: 80px; /* Garder les avatars petits */
+        height: 80px; /* Hauteur correspondante */
+        display: inline-block; /* Permet de les afficher horizontalement */
+    }
+
+    #prev-avatar,
+    #next-avatar {
+        display: none; /* Cacher les flèches sur mobile */
+    }
+}
+
+}
+
+    </style>
+</head>
+<body>
+    <div class="area">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="quiz-container">
+            <div class="logo">
+                <a href="lobby.html">
+                    <img src="img/test_logo2.png" alt="Quiz Logo">
+                </a>
+            </div>
+            <h2 class="quiz-title">Choisis ton avatar</h2>
+            <p class="avatar-warning">Prends ton temps pour choisir celui que t'aimes ! Il aura peut-être un impact par la suite 👀</p>
+            <div class="avatar-selection" id="avatar-selection">
+                <button class="avatar-btn" id="prev-avatar" disabled><i class="fas fa-chevron-left"></i></button>
+                <div class="avatar-display">
+                    <div id="avatar-display" class="avatar-wrapper">
+                        <img src="img/pfp/nezuko.jpg" alt="Avatar 1" class="avatar" id="avatar-1" onclick="selectAvatar('avatar-1')">
+                        <img src="img/pfp/hinata.jpg" alt="Avatar 2" class="avatar" id="avatar-2" onclick="selectAvatar('avatar-2')">
+                        <img src="img/pfp/happy.jpg" alt="Avatar 3" class="avatar" id="avatar-3" onclick="selectAvatar('avatar-3')">
+                        <img src="img/pfp/chiyuki.jpg" alt="Avatar 4" class="avatar" id="avatar-4" onclick="selectAvatar('avatar-4')">
+                        <img src="img/pfp/ayanokoji.jpg" alt="Avatar 5" class="avatar" id="avatar-5" onclick="selectAvatar('avatar-5')">
+                        <img src="img/pfp/maomao.jpg" alt="Avatar 6" class="avatar" id="avatar-6" onclick="selectAvatar('avatar-6')">
+                    </div>
+                </div>
+                <button class="avatar-btn" id="next-avatar"><i class="fas fa-chevron-right"></i></button>
+            </div>
+
+            <button id="start-game-btn" style="display: none;">Démarrer le jeu</button>
+            <div id="avatar-error" style="display: none; color: red; font-size: 0.9em; text-align: center; margin-top: 10px;">
+                You must choose an avatar to start the game!
+            </div>            
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="avatar.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #avatar-display-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer; /* Ajoute un curseur pointer pour indiquer que c'est cliquable */
+        }
+
+        #avatar-container {
+            display: none; /* Cache le conteneur des avatars, car on l'utilise juste pour la démonstration */
+        }
+
+        .avatar {
+            display: none; /* Cache les avatars, car on ne les utilise pas directement ici */
+        }
+
+        #control-container {
+            display: none; /* Cache le conteneur de contrôle par défaut */
+            position: absolute;
+            top: 100px; /* Positionne le conteneur sous l'avatar */
+            right: 10px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.9); /* Arrière-plan légèrement transparent */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div id="avatar-display-container" onclick="toggleControls()">
+        <img id="selected-avatar" src="" alt="Selected Avatar" style="width: 80px; height: 80px; border-radius: 10%;">
+    </div>
+
+    <div id="control-container">
+        <button id="fullscreen-btn">Plein Écran</button>
+        <br>
+        <button id="hint-btn">Indice</button>
+        <br>
+        <button id="menu-btn">Retourner au menu</button>
+    </div>
+
+    <div id="avatar-container">
+        <img id="avatar-1" class="avatar" src="img/pfp/nezuko.jpg" alt="Avatar 1">
+        <img id="avatar-2" class="avatar" src="img/pfp/hinata.jpg" alt="Avatar 2">
+        <img id="avatar-3" class="avatar" src="img/pfp/happy.jpg" alt="Avatar 3">
+        <img id="avatar-4" class="avatar" src="img/pfp/chiyuki.jpg" alt="Avatar 4">
+        <img id="avatar-5" class="avatar" src="img/pfp/ayanokoji.jpg" alt="Avatar 5">
+        <img id="avatar-6" class="avatar" src="img/pfp/maomao.jpg" alt="Avatar 6">
+    </div>
+    <div class="tenor-gif-embed" data-postid="21571470" data-share-method="host" data-aspect-ratio="1.50235" data-width="100%"><a href="https://tenor.com/view/hinata-shouyou-hinata-goosebumps-hinata-getting-scared-because-tsukki-blocked-the-quick-attack-haikyu-haikyuu-to-the-top-shoyo-shouyo-shoyou-sh%C5%8Dy%C5%8D-gif-21571470">Hinata Shouyou Hinata Goosebumps GIF</a>from <a href="https://tenor.com/search/hinata+shouyou-gifs">Hinata Shouyou GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedAvatarId = localStorage.getItem('selectedAvatar');
+            console.log(`ID de l'avatar sélectionné récupéré: ${selectedAvatarId}`);
+
+            if (selectedAvatarId) {
+                const selectedAvatarImg = document.getElementById('selected-avatar');
+                const avatarElement = document.getElementById(selectedAvatarId);
+
+                if (avatarElement) {
+                    selectedAvatarImg.src = avatarElement.src; // Récupère l'URL de l'avatar
+                    console.log(`URL de l'avatar affiché: ${selectedAvatarImg.src}`);
+                } else {
+                    console.error(`Aucun élément trouvé pour l'ID de l'avatar: ${selectedAvatarId}`);
+                }
+            } else {
+                console.log('Aucun avatar sélectionné trouvé dans localStorage.');
+            }
+        });
+
+        function toggleControls() {
+            const controlContainer = document.getElementById('control-container');
+            // Basculer l'affichage du conteneur de contrôle
+            if (controlContainer.style.display === 'none') {
+                controlContainer.style.display = 'block';
+                console.log('Conteneur de contrôle affiché.');
+            } else {
+                controlContainer.style.display = 'none';
+                console.log('Conteneur de contrôle caché.');
+            }
+        }
+    </script>
+</body>
+</html>

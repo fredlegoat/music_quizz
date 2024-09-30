@@ -1,0 +1,701 @@
+/* Cacher la scrollbar pour WebKit (Chrome, Safari, Edge) */
+body {
+    overflow: hidden; /* Masquer la scrollbar tout en désactivant le défilement */
+}
+
+/* Si tu veux autoriser le défilement mais cacher visuellement la scrollbar */
+body {
+    overflow: auto; /* Permettre le défilement */
+    scrollbar-width: none; /* Masquer la scrollbar pour Firefox */
+    -ms-overflow-style: none; /* Masquer la scrollbar pour IE et Edge */
+}
+
+body::-webkit-scrollbar {
+    display: none; /* Masquer la scrollbar pour WebKit */
+}
+
+.quiz-container {
+    display: flex;
+    flex-direction: column;  /* Make children stack vertically */
+    align-items: center;     /* Center all children horizontally */
+    justify-content: center; /* Optional: Centers the content vertically */
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 30px;
+    margin-top: 80px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.3s ease;
+}   
+.logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.logo img {
+    width: 90px;
+    height: auto;
+}
+.quiz-title {
+    margin-bottom: 40px;
+    text-align: center;
+}
+.player-cover {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.cover-img {
+    width: 300px;
+    height: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+.play-pause-btn {
+    display: block;
+    margin: 20px auto;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    color: #4e54c8;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.play-pause-btn:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+.album-info {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.album-info__track {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+.album-info__name {
+    font-size: 1em;
+    color: #ccc;
+}
+
+.progress__bar {
+    background-color: rgba(255, 255, 255, 0.2);
+    height: 5px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    width: 100%;  /* Ensure it takes full width */
+    overflow: hidden;
+}
+
+.progress__current {
+    background-color: #4e54c8;
+    height: 100%;
+    width: 0%;  /* This will be dynamically updated */
+    transition: width 0.3s ease;
+}
+
+.answers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.answer-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.answer-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+#feedback {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.9em;
+}
+#score {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.9em;
+}
+#next-btn {
+    display: block;
+    margin: 20px auto;  /* Ensures horizontal centering */
+    background-color: #4e54c8;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#next-btn:hover {
+    background-color: #3a40a0;
+}
+
+#countdown {
+    font-size: 10vw;
+    font-family: 'Press Start 2P', cursive;
+    color: #ffffff;
+    text-align: center;
+}
+
+@keyframes bump {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.5); /* Scale up */
+    }
+    100% {
+        transform: scale(1); /* Scale back to original */
+    }
+}
+
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Center vertically */
+    font-size: 10vw; /* Adjust size as needed */
+    color: #040; /* Text color */
+}
+
+#countdown {
+    animation: bump 0.5s ease forwards; /* Apply bump effect */
+}
+
+
+.control-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 10px;
+    padding: 5px;
+    transition: color 0.3s ease;
+}
+
+.control-btn:hover {
+    color: #4e54c8;
+}
+
+#volume-slider {
+    width: 100px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+
+#volume-slider::-webkit-slider-runnable-track {
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 5px;
+    border-radius: 5px;
+}
+
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #ffffff;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-top: -5px;
+    transition: background-color 0.3s ease;
+}
+
+#volume-slider::-webkit-slider-thumb:hover {
+    background-color: #4e54c8;
+}
+
+/* Add styles for Firefox */
+#volume-slider::-moz-range-track {
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 5px;
+    border-radius: 5px;
+}
+
+#volume-slider::-moz-range-thumb {
+    background-color: #ffffff;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+#volume-slider::-moz-range-thumb:hover {
+    background-color: #4e54c8;
+}
+
+/* Add styles for IE and Edge */
+#volume-slider::-ms-track {
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 5px;
+    border-radius: 5px;
+}
+
+#volume-slider::-ms-thumb {
+    background-color: #ffffff;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+#volume-slider::-ms-thumb:hover {
+    background-color: #4e54c8;
+}
+
+/* ... (previous styles remain the same) */
+
+.player-cover {
+    perspective: 1000px;
+    width: 300px;
+    height: 300px;
+    margin: 0 auto 20px;
+}
+
+.flip-card {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.flip-card.flipped {
+    transform: rotateY(180deg);
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.flip-card-front {
+    background-color: #bbb;
+    color: black;
+}
+
+.flip-card-back {
+    background-color: rgba(78, 84, 200, 0.8); /* Changed background color to a shade of blue */
+    color: #ffffff; /* Changed text color to white for better contrast */
+    transform: rotateY(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7em; /* Slightly reduced font size */
+    line-height: 1.6;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.flip-card-back p {
+    margin: 0; /* Remove default paragraph margins */
+    max-height: 100%; /* Ensure the text doesn't overflow */
+    overflow-y: auto; /* Add vertical scrollbar if text is too long */
+    padding-right: 10px; /* Add some padding for the scrollbar */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #ffffff rgba(255, 255, 255, 0.3); /* For Firefox */
+}
+
+/* Styling for WebKit browsers (Chrome, Safari) scrollbar */
+.flip-card-back p::-webkit-scrollbar {
+    width: 6px;
+}
+
+.flip-card-back p::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.flip-card-back p::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+    border-radius: 3px;
+}
+
+.cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+#fullscreen-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100; /* Ensure it stays on top */
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 20%; /* Round button */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth background change */
+}
+
+#fullscreen-btn i {
+    font-size: 16px; /* Icon size */
+}
+
+#fullscreen-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent black */
+}
+
+.score-image {
+    width: 300px;  /* Adjust the size as needed */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+}
+
+
+/***/
+.quiz-container {
+    display: flex;
+    flex-direction: column;  
+    align-items: center;     
+    justify-content: center; 
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;  /* Reduced padding for a smaller vertical size */
+    margin-top: 40px;  /* Reduced margin for a smaller vertical size */
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.3s ease;
+}
+
+.cover-img {
+    width: 300px;  /* Adjust width for smaller size */
+    height: 300px;  /* Adjust height for smaller size */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Media queries for mobile devices */
+@media (max-width: 600px) {
+    .quiz-container {
+        padding: 15px;  /* Further reduce padding for mobile */
+        margin-top: 20px;  /* Further reduce margin for mobile */
+    }
+
+    .cover-img {
+        width: 200px;  /* Smaller size on mobile */
+        height: 200px;  /* Smaller size on mobile */
+    }
+
+    .sound-control {
+        display: none;  /* Hide sound control and fullscreen button on mobile */
+    }
+}
+
+.logo {
+    margin-bottom: 10px;  /* Reduced margin */
+}
+
+.quiz-title {
+    margin-bottom: 20px;  /* Reduced margin */
+    text-align: center;
+}
+
+.player-cover {
+    margin-bottom: 10px;  /* Reduced margin */
+}
+
+.play-pause-btn {
+    margin: 15px auto;  /* Reduced margin */
+    width: 50px;  /* Reduced width */
+    height: 50px;  /* Reduced height */
+    font-size: 20px;  /* Reduced font size */
+}
+
+.album-info {
+    margin-bottom: 10px;  /* Reduced margin */
+}
+
+.album-info__track,
+.album-info__name {
+    font-size: 1em;  /* Reduced font size */
+}
+
+.progress__bar {
+    height: 4px;  /* Reduced height */
+    margin-bottom: 10px;  /* Reduced margin */
+}
+
+.answers {
+    margin-bottom: 10px;  /* Reduced margin */
+}
+
+.answer-btn {
+    padding: 8px 15px;  /* Reduced padding */
+    font-size: 0.7em;  /* Reduced font size */
+}
+
+#next-btn {
+    padding: 8px 15px;  /* Reduced padding */
+    font-size: 0.7em;  /* Reduced font size */
+}
+
+#score {
+    font-size: 0.8em;  /* Reduced font size */
+    margin-bottom: 0%;
+}
+
+#feedback {
+    font-size: 0.8em;  /* Reduced font size */
+}
+
+#countdown {
+    font-size: 8vw;  /* Adjusted size */
+}
+
+/* Adjustments for mobile */
+@media (max-width: 768px) {
+    .quiz-container {
+        padding: 10px; /* Reduced padding */
+        margin-top: 20px; /* Adjust margin */
+        max-width: 100%; /* Full width on mobile */
+        overflow: hidden; /* Hide overflow */
+    }
+
+    .cover-img {
+        width: 200px; /* Full width of the container */
+        height: 200px; /* Maintain aspect ratio */
+        max-height: 200px; /* Set a max height if needed */
+        object-fit: cover; /* Ensure cover image scales correctly */
+    }
+
+    .player-cover {
+        width: 200px; /* Full width of the container */
+        max-height: 200px; /* Set a max height to maintain consistency */
+        object-fit: cover; /* Scale correctly */
+    }
+
+    .flip-card {
+        width: 200px; /* Match width of cover */
+        max-height: 200px; /* Set a max height to maintain consistency */
+        object-fit: cover; /* Ensure it maintains a cover-like aspect */
+        display: flex; /* Use flexbox for centering */
+        justify-content: center; /* Center content */
+        align-items: center; /* Center content */
+    }
+
+    /* Hide sound and fullscreen buttons on mobile */
+    .sound-control,
+    #fullscreen-btn {
+        display: none !important;
+    }
+
+    .score-image {
+        width: 100px; /* Adjust size as needed */
+        height: auto; /* Maintain aspect ratio */
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        margin-top: 20px;
+    }
+
+    .bonus-button {
+        display: block;
+        margin: 20px auto;
+        background-color: #4e54c8;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        color: #fff;
+        font-family: 'Press Start 2P', cursive;
+        font-size: 0.8em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .bonus-button:hover {
+        background-color: #3a40a0;
+    }
+    h2.quiz-title {
+        font-size: 1.2em;
+    }
+    .logo {
+        margin-top: -150px;
+    }
+    #countdown-text {
+        display: none; /* Masque le texte sur les écrans plus petits */
+    }
+}
+
+.bonus-button {
+    display: block;
+    margin: 20px auto;
+    background-color: #4e54c8;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.bonus-button:hover {
+    background-color: #3a40a0;
+}
+/***/
+
+/* ... (existing styles) ... */
+
+.floating-hat {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    z-index: 1000;
+    display: none; /* Initially hidden */
+    cursor: pointer;
+    animation: 
+        float 3s ease-in-out infinite, 
+        moveX 15s ease-in-out infinite alternate,
+        moveY 17s ease-in-out infinite alternate;
+}
+
+.floating-hat img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.7; /* Make the image more transparent */
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-30px) rotate(5deg); }
+    50% { transform: translateY(-15px) rotate(-5deg); }
+    75% { transform: translateY(-40px) rotate(3deg); }
+}
+
+@keyframes moveX {
+    0%, 100% { left: 5%; }
+    50% { left: 85%; }
+}
+
+@keyframes moveY {
+    0%, 100% { top: 10%; }
+    50% { top: 75%; }
+}
+
+/*************/
+
+.blur-background > *:not(.popup-box):not(.floating-hat) {
+    filter: blur(5px);
+}
+
+.popup-box {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 2000;
+    max-width: 80%;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.popup-content p {
+    margin: 10px 0;
+    color: #333;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8em;
+}
+
+.hint-button {
+    display: block;
+    margin: 20px auto 0;
+    background-color: #ffd700;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #333;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.hint-button:hover {
+    background-color: #ffeb3b;
+}
+
+.floating-hat {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    z-index: 1000;
+    display: none; /* Initially hidden */
+    cursor: pointer;
+    animation: 
+        float 3s ease-in-out infinite, 
+        moveX 15s ease-in-out infinite alternate,
+        moveY 17s ease-in-out infinite alternate;
+}
+
+#countdown-text {
+    font-size: 12px; /* Taille de la police pour le texte en dessous */
+    color: #ffffff; /* Couleur du texte */
+    text-align: center; /* Centrer le texte */
+    position: fixed; /* Fixe la position */
+    bottom: 100px; /* Espace de 10 pixels du bas de la page */
+    left: 50%; /* Centre horizontalement */
+    transform: translateX(-50%); /* Ajuste pour le centrage */
+    margin-top: 0; /* Pas d'espacement en haut */
+}
+
+.sound-control {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column; /* Icône en bas, slider en haut */
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+}

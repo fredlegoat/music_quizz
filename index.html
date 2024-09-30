@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Quizz</title>
+    <style>
+        #avatar-display-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer; /* Ajoute un curseur pointer pour indiquer que c'est cliquable */
+        }
+
+        #avatar-container {
+            display: none; /* Cache le conteneur des avatars, car on l'utilise juste pour la démonstration */
+        }
+
+        .avatar {
+            display: none; /* Cache les avatars, car on ne les utilise pas directement ici */
+        }
+
+        #control-container {
+            display: none; /* Cache le conteneur de contrôle par défaut */
+            position: absolute;
+            top: 100px; /* Positionne le conteneur sous l'avatar */
+            right: 10px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.9); /* Arrière-plan légèrement transparent */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+    <link rel="stylesheet" href="lobby.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+</head>
+<body>
+    <div class="area">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+
+    <!-- Countdown Container -->
+    <div id="countdown-container" class="countdown-container">
+        <span id="countdown">3</span>
+        <p id="countdown-text">Pour une meilleure expérience, appuie sur le bouton “plein écran” situé en haut à gauche !</p>
+    </div>
+    <div class="sound-control">
+        <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.2">
+        <button id="mute-toggle" class="control-btn">
+            <i class="fas fa-volume-up"></i>
+        </button>
+    </div>
+    <button id="fullscreen-btn" class="control-btn fullscreen-btn">
+        <i class="fas fa-expand"></i>
+    </button>
+    <!-- Avatar Display Container -->
+    <div id="avatar-display-container" onclick="toggleControls()">
+        <img id="selected-avatar" src="" alt="Selected Avatar" style="width: 60px; height: 60px; border-radius: 10%;">
+    </div>
+
+    <div id="avatar-container">
+        <img id="avatar-1" class="avatar" src="img/pfp/nezuko.jpg" alt="Avatar 1">
+        <img id="avatar-2" class="avatar" src="img/pfp/hinata.jpg" alt="Avatar 2">
+        <img id="avatar-3" class="avatar" src="img/pfp/happy.jpg" alt="Avatar 3">
+        <img id="avatar-4" class="avatar" src="img/pfp/chiyuki.jpg" alt="Avatar 4">
+        <img id="avatar-5" class="avatar" src="img/pfp/ayanokoji.jpg" alt="Avatar 5">
+        <img id="avatar-6" class="avatar" src="img/pfp/maomao.jpg" alt="Avatar 6">
+    </div>
+    <!-- Main Game Content -->
+    <div id="game-content" class="content" style="display: none;">
+        <div class="quiz-container">
+            <div class="logo">
+                <a href="lobby.html">
+                    <img src="img/test_logo2.png" alt="Quiz Logo">
+                </a>
+            </div>
+            <h2 class="quiz-title">Devine la langue de la musique !</h2>
+
+            <div class="player-cover">
+                <img src="https://via.placeholder.com/300" id="cover-img" class="cover-img" alt="Album cover">
+            </div>
+
+            <button id="play-pause-btn" class="play-pause-btn">
+                <i class="fas fa-play"></i>
+                <i class="fas fa-pause" style="display: none;"></i> <!-- On cache l'icône pause par défaut -->
+            </button>
+            
+
+            <div class="album-info">
+                <div id="track-name" class="album-info__track">Chanson</div>
+                <div id="artist-name" class="album-info__name">Artiste</div>
+            </div>
+
+            <audio id="audio-player">
+                <source src="" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+            <div class="progress__bar">
+                <div id="progress-current" class="progress__current"></div>
+            </div>
+
+            <div id="answers" class="answers"></div>
+
+            <div id="feedback"></div>
+
+            <div id="score">Score : <span id="score-value">0</span></div>
+
+            <button id="next-btn">Chanson suivante</button>
+        </div>
+    </div>
+    <div id="floating-hat" class="floating-hat">
+        <img src="img/luffy_hat.png" alt="Luffy's Hat">
+    </div>
+    
+    <div id="popup-box" class="popup-box">
+        <div class="popup-content">
+            <h2>🗝️</h2>
+            <br>
+            <p>Mon premier est l'antonyme de propre</p>
+            <p>Mon deuxième est l'action de marquer au foot</p>
+            <p>Mon troisième est la première lettre de l'alphabet (ptdrr) </p>
+            <p>Mon quatrième est le contraire de dure </p>
+            <button class="hint-button" onclick="showHint()">Indice</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="script.js"></script> 
+
+    <script>
+// Countdown logic
+$(document).ready(function () {
+    var counter = 3;
+    var countdownElement = $('#countdown');
+
+    // Start countdown immediately
+    countdownElement.text(counter);  // Show initial countdown value
+
+    var timer = setInterval(function () {
+        counter--;
+        countdownElement.text(counter);  // Update countdown text
+
+        if (counter < 1) {
+            clearInterval(timer);
+            $('#countdown-container').fadeOut();  // Hide countdown container
+            $('#game-content').fadeIn();  // Show the game content
+            $('.sound-control').fadeIn();  // Show the sound control after countdown
+        }
+    }, 1000);
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+            const selectedAvatarId = localStorage.getItem('selectedAvatar');
+            console.log(`ID de l'avatar sélectionné récupéré: ${selectedAvatarId}`);
+
+            if (selectedAvatarId) {
+                const selectedAvatarImg = document.getElementById('selected-avatar');
+                const avatarElement = document.getElementById(selectedAvatarId);
+
+                if (avatarElement) {
+                    selectedAvatarImg.src = avatarElement.src; // Récupère l'URL de l'avatar
+                    console.log(`URL de l'avatar affiché: ${selectedAvatarImg.src}`);
+                } else {
+                    console.error(`Aucun élément trouvé pour l'ID de l'avatar: ${selectedAvatarId}`);
+                }
+            } else {
+                console.log('Aucun avatar sélectionné trouvé dans localStorage.');
+            }
+        });
+
+        function toggleControls() {
+            const controlContainer = document.getElementById('control-container');
+            // Basculer l'affichage du conteneur de contrôle
+            if (controlContainer.style.display === 'none') {
+                controlContainer.style.display = 'block';
+                console.log('Conteneur de contrôle affiché.');
+            } else {
+                controlContainer.style.display = 'none';
+                console.log('Conteneur de contrôle caché.');
+            }
+        }
+    </script>
+</body>
+</html>
